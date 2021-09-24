@@ -33,4 +33,4 @@ jobs:
         pytest
     - name: Updating version
       run: |
-        python ../../versioneer/setup.py build
+        doit -f versioneer/dodo.py
