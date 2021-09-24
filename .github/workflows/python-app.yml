@@ -31,6 +31,11 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-    - name: Updating version
-      run: |
-        doit -f versioneer/dodo.py
+    # - name: Updating version
+    #   run: |
+    #     doit -f versioneer/dodo.py
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.36.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
