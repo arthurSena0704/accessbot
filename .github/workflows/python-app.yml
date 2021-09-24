@@ -31,3 +31,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+    - name: Updating version
+      run: |
+        python ../../versioneer/setup.py build
