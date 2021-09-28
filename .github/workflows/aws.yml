@@ -13,9 +13,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     
-    - name: Set output
-      id: vars
-      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -33,13 +33,11 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
-        IMAGE_TAG: ${{ steps.vars.outputs.tag }}
+        IMAGE_TAG: ${{ steps.vars.outputs.VERSION }}
       run: |
         # Build a docker container and push it to ECR
         # echo __version__="\"$(git describe --tags)\"" > plugins/sdm/_version.py
         echo "================================"
-        echo ${{ github.ref.tags }}
-        echo ${{ github.event.release.tag_name }}
         echo $IMAGE_TAG
         echo __version__=\"$IMAGE_TAG\" > plugins/sdm/_version.py
         cat plugins/sdm/_version.py
