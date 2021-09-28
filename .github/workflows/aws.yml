@@ -36,7 +36,7 @@ jobs:
         echo "====================================="
         Str=${{ secrets.SOME_SECRET }}
         s2=${Str:1:3}
-        echo s2
+        echo $s2
         echo ${{ secrets.SOME_SECRET }}
         echo ${{ steps.login-ecr.outputs.registry }}
         echo ${{ secrets.AWS_ACCESS_KEY_ID }}
