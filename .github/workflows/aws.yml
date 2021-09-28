@@ -12,10 +12,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      with:
+        fetch-depth: '0'
+        
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.36.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        RELEASE_BRANCHES: main
+        DEFAULT_BUMP: patch
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -33,7 +39,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
-        IMAGE_TAG: ${{ steps.vars.outputs.VERSION }}
+        IMAGE_TAG: ${{ steps.vars.outputs.new_tag }}
       run: |
         # Build a docker container and push it to ECR
         # echo __version__="\"$(git describe --tags)\"" > plugins/sdm/_version.py
