@@ -38,7 +38,7 @@ jobs:
         # Build a docker container and push it to ECR
         # echo __version__="\"$(git describe --tags)\"" > plugins/sdm/_version.py
         echo "================================"
-        echo ${{ github.ref }}
+        echo ${{ github.ref.tags }}
         echo ${{ github.event.release.tag_name }}
         echo $IMAGE_TAG
         echo __version__=\"$IMAGE_TAG\" > plugins/sdm/_version.py
