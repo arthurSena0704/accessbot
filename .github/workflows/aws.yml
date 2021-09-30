@@ -23,6 +23,7 @@ jobs:
         WITH_V: true
         RELEASE_BRANCHES: main
         DEFAULT_BUMP: patch
+        TAG_CONTEXT: branch
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
