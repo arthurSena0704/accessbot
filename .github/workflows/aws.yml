@@ -1,6 +1,9 @@
 on:
-  push:
+  workflow_run:
+    workflows: ["accessbot"]
     branches: [ 1.0.x ]
+    types: 
+      - completed
 
 name: AccessBot CI on ECR
 
@@ -8,7 +11,8 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
     steps:
     - name: Checkout
       uses: actions/checkout@v2
