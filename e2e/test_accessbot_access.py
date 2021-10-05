@@ -30,7 +30,7 @@ class Test_default_flow:  # manual approval
     def test_access_command_grant_approved(self, mocked_testbot):
         push_access_request(mocked_testbot)
         mocked_testbot.push_message(f"yes {access_request_id}")
-        assert "valid request" not in mocked_testbot.pop_message()
+        assert "valid request" in mocked_testbot.pop_message()
         assert "access request" in mocked_testbot.pop_message()
         assert "Granting" in mocked_testbot.pop_message()
 
