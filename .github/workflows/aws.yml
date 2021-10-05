@@ -1,6 +1,9 @@
 on:
-  push:
+  workflow_run:
+    workflows: ["accessbot"]
     branches: [ main ]
+    types: 
+      - completed
 
 name: AccessBot CI on ECR
 
