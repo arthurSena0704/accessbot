@@ -31,3 +31,18 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+
+    - name: Bump version and push tag
+      id: version
+      uses: anothrNick/github-tag-action@1.36.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: false
+        RELEASE_BRANCHES: main
+        DEFAULT_BUMP: patch
+        TAG_CONTEXT: branch

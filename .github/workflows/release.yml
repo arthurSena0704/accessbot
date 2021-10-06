@@ -19,15 +19,9 @@ jobs:
       with:
         fetch-depth: '0'
 
-    - name: Bump version and push tag
+    - name: Set version output
       id: version
-      uses: anothrNick/github-tag-action@1.36.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        WITH_V: false
-        RELEASE_BRANCHES: main
-        DEFAULT_BUMP: patch
-        TAG_CONTEXT: branch
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -45,7 +39,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
-        IMAGE_TAG: ${{ steps.version.outputs.new_tag }}
+        IMAGE_TAG: ${{ steps.version.outputs.tag }}
       run: |
         # Installing submodules
         git submodule init
