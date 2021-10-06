@@ -5,7 +5,7 @@ on:
     types:
       - completed
 
-name: AccessBot Release on ECR
+name: AccessBot Release 1.0 on ECR
 
 jobs:
   deploy:
@@ -52,7 +52,7 @@ jobs:
         # Building docker image
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         # Pushing image to ECR
-        aws ecr-public get-login-password --region us-west-2 | docker login --username AWS --password-stdin public.ecr.aws
+        aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin public.ecr.aws
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest-1.0
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest-1.0
