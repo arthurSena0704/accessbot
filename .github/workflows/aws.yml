@@ -1,6 +1,6 @@
 on:
   workflow_run:
-    workflows: ["accessbot"]
+    workflows: ["accessbot-1.0"]
     branches: [ 1.0.x ]
     types: 
       - completed
