@@ -5,9 +5,9 @@ name: accessbot
 
 on:
   push:
-    branches: [ main, 1.0.x ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, 1.0.x ]
+    branches: [ main ]
 
 jobs:
   build:
