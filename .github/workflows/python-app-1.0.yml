@@ -53,6 +53,9 @@ jobs:
           DEFAULT_BUMP: patch
           TAG_CONTEXT: branch
 
+    outputs:
+      version: ${{ steps.version.outputs.new_tag }}
+
   deploy:
     name: Deploy
     needs: versioning
@@ -78,7 +81,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
-          IMAGE_TAG: ${{ jobs.versioning.steps.version.outputs.new_tag }}
+          IMAGE_TAG: ${{needs.versioning.outputs.version}}
         run: |
           # Adding version
           echo __version__=\"$IMAGE_TAG\" > plugins/sdm/_version.py
