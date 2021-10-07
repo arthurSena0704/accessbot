@@ -21,7 +21,9 @@ jobs:
 
     - name: Set version output
       id: version
-      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      run: |
+        echo ">>> GITHUB_REF: ${GITHUB_REF#refs/*/}"
+        echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
